@@ -1,46 +1,61 @@
 ﻿using System;
 
 namespace abstratction
-{
-    class Employee
+{ 
+    class example
     {
-        public int EmpId;
-        public string EmpName;
-        public double Salary;
-        double tax = 0.1;
 
-        public Employee(int id, string name, double salary)
-        {
-            this.EmpId = id;
-            this.EmpName = name;
-            this.Salary = salary;
-        }
+    }
+    interface i1
+    {
 
-        void calculateSalary()
+    }
+    interface i2
+    {
+
+    }
+    interface myinterface:i1, i2 // Interface can inherit a multiple interfaces but cannot inherit a class.
+    {
+        //myinterface()  //An interface cannot declare constructor and destructor.
+        //{
+
+        //}
+        void print();
+        
+    }
+    abstract class myclass : example, i1, i2 // Abstract class can inherit a class and a multiple interfaces.
+    {
+        public abstract void show();
+        public myclass()  //Abstractv contain constructor and destructor.
         {
-            if (Salary >= 15000)
-            {
-                double netSalary = Salary - (tax * Salary);
-                Console.WriteLine("Your Salary is" + netSalary);
-            }
-            else
-            {
-                Console.WriteLine("Your Salary is {0}+ " + Salary);
-            }
+            Console.WriteLine("Abstract Class Constructor");
         }
-        public void ActualSalary()
+        ~myclass()
         {
-            this.calculateSalary();
+            Console.WriteLine("Abstract class destructor");
+        }
+        
+    }
+    class myclass1:myclass,myinterface
+    {
+        public override void show() //An abstract class method is implemented using the override keyboard.
+        {
+            Console.WriteLine("An abstract class method is implemented using override keyword");
+        }
+        public void print()  //An interface  method is implemented without using the override keyboard.
+        {
+            Console.WriteLine("An interface method is implemented withiut using override keyword");
         }
     }
-
     class program
     {
         static void Main(string[] args)
         {
-            Employee EmpDetails = new Employee(3316, "Ritik", 21000);
-            EmpDetails.ActualSalary();
-            Console.ReadLine();
+            myclass1 obj = new myclass1();
+            obj = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Console.WriteLine("End of Main()");
         }
     }
 }
